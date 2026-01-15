@@ -18,6 +18,9 @@ CREATE TABLE usuarios (
     login VARCHAR(60) NOT NULL,
     senha_hash VARCHAR(120) NOT NULL,
     status_cadastro VARCHAR(30) NOT NULL,
+
+    perfil_tipo VARCHAR(30) NOT NULL,
+
     endereco_id BIGINT,
     criado_em TIMESTAMP NOT NULL,
     atualizado_em TIMESTAMP NOT NULL,
@@ -26,3 +29,4 @@ CREATE TABLE usuarios (
     CONSTRAINT uk_usuario_login UNIQUE (login),
     CONSTRAINT fk_usuario_endereco FOREIGN KEY (endereco_id) REFERENCES enderecos(id)
 );
+

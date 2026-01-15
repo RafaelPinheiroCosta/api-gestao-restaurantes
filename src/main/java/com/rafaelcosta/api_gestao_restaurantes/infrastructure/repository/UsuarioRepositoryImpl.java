@@ -9,8 +9,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -22,36 +20,37 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     private final JdbcClient jdbcClient;
 
-    private static final RowMapper<Usuario> USUARIO_MAPPER = new RowMapper<>() {
-        @Override
-        public Usuario mapRow(ResultSet rs, int rowNum) throws SQLException {
+    private static final RowMapper<Usuario> USUARIO_MAPPER = (rs, rowNum) -> {
 
-            Endereco endereco = null;
-            Long enderecoId = rs.getLong("e_id");
-            if (!rs.wasNull()) {
-                endereco = Endereco.builder()
-                        .id(enderecoId)
-                        .rua(rs.getString("e_rua"))
-                        .numero(rs.getString("e_numero"))
-                        .complemento(rs.getString("e_complemento"))
-                        .cidade(rs.getString("e_cidade"))
-                        .estado(rs.getString("e_estado"))
-                        .cep(rs.getString("e_cep"))
-                        .build();
-            }
-
-            return Usuario.builder()
-                    .id(UUID.fromString(rs.getString("u_id")))
-                    .nome(rs.getString("u_nome"))
-                    .email(rs.getString("u_email"))
-                    .login(rs.getString("u_login"))
-                    .senhaHash(rs.getString("u_senha_hash"))
-                    .statusCadastro(StatusCadastro.valueOf(rs.getString("u_status_cadastro")))
-                    .endereco(endereco)
-                    .criadoEm(rs.getTimestamp("u_criado_em").toLocalDateTime())
-                    .atualizadoEm(rs.getTimestamp("u_atualizado_em").toLocalDateTime())
+        Endereco endereco = null;
+        Long enderecoId = rs.getLong("e_id");
+        if (!rs.wasNull()) {
+            endereco = Endereco.builder()
+                    .id(enderecoId)
+                    .rua(rs.getString("e_rua"))
+                    .numero(rs.getString("e_numero"))
+                    .complemento(rs.getString("e_complemento"))
+                    .cidade(rs.getString("e_cidade"))
+                    .estado(rs.getString("e_estado"))
+                    .cep(rs.getString("e_cep"))
                     .build();
         }
+
+        Usuario usuario = Usuario.builder()
+                .id(UUID.fromString(rs.getString("u_id")))
+                .nome(rs.getString("u_nome"))
+                .email(rs.getString("u_email"))
+                .login(rs.getString("u_login"))
+                .senhaHash(rs.getString("u_senha_hash"))
+                .statusCadastro(StatusCadastro.valueOf(rs.getString("u_status_cadastro")))
+                .perfilTipo(rs.getString("u_perfil_tipo"))
+                .endereco(endereco)
+                .criadoEm(rs.getTimestamp("u_criado_em").toLocalDateTime())
+                .atualizadoEm(rs.getTimestamp("u_atualizado_em").toLocalDateTime())
+                .build();
+
+        usuario.carregarPerfil();
+        return usuario;
     };
 
     private static final String BASE_SELECT = """
@@ -60,6 +59,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             u.nome            AS u_nome,
             u.email           AS u_email,
             u.login           AS u_login,
+            u.perfil_tipo    AS u_perfil_tipo,
             u.senha_hash      AS u_senha_hash,
             u.status_cadastro AS u_status_cadastro,
             u.criado_em       AS u_criado_em,
@@ -86,12 +86,22 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
     @Override
     public List<Usuario> findAll(int size, int offset) {
-        return jdbcClient.sql(BASE_SELECT + " ORDER BY u.criado_em DESC LIMIT :size OFFSET :offset")
+        return jdbcClient.sql(
+                    BASE_SELECT + " ORDER BY u.criado_em DESC LIMIT :size OFFSET :offset"
+                )
                 .param("size", size)
                 .param("offset", offset)
                 .query(USUARIO_MAPPER)
                 .list();
     }
+    @Override
+    public Optional<Usuario> findByLogin(String login) {
+        return jdbcClient.sql(BASE_SELECT + " WHERE u.login = :login")
+                .param("login", login)
+                .query(USUARIO_MAPPER)
+                .optional();
+    }
+
 
     @Override
     public Optional<Usuario> save(Usuario usuario) {
@@ -99,22 +109,34 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         UUID id = usuario.getId() != null ? usuario.getId() : UUID.randomUUID();
 
         jdbcClient.sql("""
-                INSERT INTO usuarios (
-                    id, nome, email, login, senha_hash, status_cadastro, endereco_id, criado_em, atualizado_em
-                )
-                VALUES (
-                    :id, :nome, :email, :login, :senhaHash, :statusCadastro, :enderecoId, :criadoEm, :atualizadoEm
-                )
+                        INSERT INTO usuarios (
+                            id, nome, email, login, senha_hash, status_cadastro,
+                            perfil_tipo, endereco_id, criado_em, atualizado_em
+                        )
+                        VALUES (
+                            :id, :nome, :email, :login, :senhaHash, :statusCadastro,
+                            :perfilTipo, :enderecoId, :criadoEm, :atualizadoEm
+                        )
                 """)
                 .param("id", id.toString())
                 .param("nome", usuario.getNome())
                 .param("email", usuario.getEmail())
                 .param("login", usuario.getLogin())
+                .param("perfilTipo", usuario.getPerfilTipo())
                 .param("senhaHash", usuario.getSenhaHash())
                 .param("statusCadastro", usuario.getStatusCadastro().name())
-                .param("enderecoId", usuario.getEndereco() != null ? usuario.getEndereco().getId() : null)
-                .param("criadoEm", usuario.getCriadoEm() != null ? usuario.getCriadoEm() : LocalDateTime.now())
-                .param("atualizadoEm", usuario.getAtualizadoEm() != null ? usuario.getAtualizadoEm() : LocalDateTime.now())
+                .param(
+                        "enderecoId", usuario.getEndereco() != null ?
+                                usuario.getEndereco().getId() : null
+                )
+                .param(
+                        "criadoEm", usuario.getCriadoEm() != null ?
+                                usuario.getCriadoEm() : LocalDateTime.now()
+                )
+                .param(
+                        "atualizadoEm", usuario.getAtualizadoEm() != null ?
+                                usuario.getAtualizadoEm() : LocalDateTime.now()
+                )
                 .update();
 
         return findById(id);
@@ -127,6 +149,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 SET nome = :nome,
                     email = :email,
                     login = :login,
+                    perfil_tipo = :perfilTipo,
                     senha_hash = :senhaHash,
                     status_cadastro = :statusCadastro,
                     endereco_id = :enderecoId,
@@ -137,9 +160,13 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .param("nome", usuario.getNome())
                 .param("email", usuario.getEmail())
                 .param("login", usuario.getLogin())
+                .param("perfilTipo", usuario.getPerfilTipo())
                 .param("senhaHash", usuario.getSenhaHash())
                 .param("statusCadastro", usuario.getStatusCadastro().name())
-                .param("enderecoId", usuario.getEndereco() != null ? usuario.getEndereco().getId() : null)
+                .param(
+                        "enderecoId", usuario.getEndereco() != null ?
+                                usuario.getEndereco().getId() : null
+                )
                 .param("atualizadoEm", LocalDateTime.now())
                 .update();
 

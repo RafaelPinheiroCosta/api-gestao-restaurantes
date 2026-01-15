@@ -1,6 +1,8 @@
 package com.rafaelcosta.api_gestao_restaurantes.domain.entity;
 
 import com.rafaelcosta.api_gestao_restaurantes.domain.enuns.StatusCadastro;
+import com.rafaelcosta.api_gestao_restaurantes.domain.perfil.Perfil;
+import com.rafaelcosta.api_gestao_restaurantes.domain.perfil.Perfis;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -19,7 +21,24 @@ public class Usuario {
     private String login;
     private String senhaHash;
     private StatusCadastro statusCadastro;
+
+    // NOVO: persistido no banco
+    private String perfilTipo;
+
+    // NOVO: composição (derivado)
+    @Setter(AccessLevel.NONE)
+    private Perfil perfil;
+
     private Endereco endereco;
     private LocalDateTime criadoEm;
     private LocalDateTime atualizadoEm;
+
+    public void carregarPerfil() {
+        this.perfil = Perfis.fromTipo(this.perfilTipo);
+    }
+
+    public Perfil perfil() {
+        if (this.perfil == null) carregarPerfil();
+        return this.perfil;
+    }
 }

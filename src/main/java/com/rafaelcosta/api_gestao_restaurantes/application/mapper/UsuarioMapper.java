@@ -16,12 +16,12 @@ public class UsuarioMapper {
                 u.getEmail(),
                 u.getLogin(),
                 u.getStatusCadastro(),
+                u.getPerfilTipo(),
                 u.getEndereco() != null ? toEnderecoResponse(u.getEndereco()) : null,
                 u.getCriadoEm(),
                 u.getAtualizadoEm()
         );
     }
-
     public Endereco toEndereco(EnderecoRequest e) {
         return Endereco.builder()
                 .rua(e.rua())

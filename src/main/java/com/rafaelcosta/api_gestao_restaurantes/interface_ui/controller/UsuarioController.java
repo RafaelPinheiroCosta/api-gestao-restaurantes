@@ -5,6 +5,7 @@ import com.rafaelcosta.api_gestao_restaurantes.application.service.UsuarioServic
 import com.rafaelcosta.api_gestao_restaurantes.application.dto.UsuarioResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/api/v1/usuarios")
 @Slf4j
 @RequiredArgsConstructor
 public class UsuarioController {
@@ -22,32 +23,43 @@ public class UsuarioController {
 
     @GetMapping
     public ResponseEntity<List<UsuarioResponse>> listarUsuarios(
-            @RequestParam("page") int page,
-            @RequestParam("size") int size
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
     ) {
         log.info("Listando usuários page={} size={}", page, size);
         return ResponseEntity.ok(usuarioService.findAllUsuarios(page, size));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<UsuarioResponse>> buscarUsuarioPorId(@PathVariable UUID id) {
+    public ResponseEntity<UsuarioResponse> buscarUsuarioPorId(@PathVariable UUID id) {
         log.info("Buscando usuário id={}", id);
-        return ResponseEntity.ok(usuarioService.findById(id));
+        return usuarioService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<UsuarioResponse> salvarUsuario(@RequestBody UsuarioRequest request) {
         log.info("Salvando novo usuário login={}", request.login());
-        return ResponseEntity.ok(usuarioService.saveUsuario(request));
+
+        UsuarioResponse response = usuarioService.saveUsuario(request);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .header("Location", "/api/v1/usuarios/" + response.id())
+                .body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<UsuarioResponse>> atualizarUsuario(
+    public ResponseEntity<UsuarioResponse> atualizarUsuario(
             @PathVariable UUID id,
             @RequestBody UsuarioRequest request
     ) {
         log.info("Atualizando usuário id={}", id);
-        return ResponseEntity.ok(usuarioService.updateUsuario(id, request));
+
+        return usuarioService.updateUsuario(id, request)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

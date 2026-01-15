@@ -11,6 +11,7 @@ public record UsuarioResponse(
         String email,
         String login,
         StatusCadastro statusCadastro,
+        String perfilTipo,
         EnderecoResponse endereco,
         LocalDateTime criadoEm,
         LocalDateTime atualizadoEm
