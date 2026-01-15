@@ -22,10 +22,8 @@ public class Usuario {
     private String senhaHash;
     private StatusCadastro statusCadastro;
 
-    // NOVO: persistido no banco
     private String perfilTipo;
 
-    // NOVO: composição (derivado)
     @Setter(AccessLevel.NONE)
     private Perfil perfil;
 

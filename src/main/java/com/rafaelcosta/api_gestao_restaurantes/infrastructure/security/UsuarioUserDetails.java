@@ -59,7 +59,7 @@ public class UsuarioUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        // ponto de evolução: bloquear login se statusCadastro != ATIVO
+
         return true;
     }
 }
