@@ -8,7 +8,7 @@ INSERT INTO usuarios (
     perfil_tipo, endereco_id, criado_em, atualizado_em
 )
 VALUES (
-    '11111111-1111-1111-1111-111111111111',
+    '22222222-2222-2222-2222-222222222222',
     'João da Silva',
     'joao@email.com',
     'joao',
@@ -27,10 +27,10 @@ INSERT INTO usuarios (
     perfil_tipo, endereco_id, criado_em, atualizado_em
 )
 VALUES (
-    '22222222-2222-2222-2222-222222222222',
-    'Maria Souza',
-    'maria@email.com',
-    'maria',
+    '11111111-1111-1111-1111-111111111111',
+    'Dono Restaurante',
+    'dono@email.com',
+    'dono',
     '$2b$10$yGVJQFo1IyZxiT0MnvmIGOx8F0jazXpzssFgxDyqu..a2as0K2jei', -- Senha@123
     'PENDENTE',
     'DONO_RESTAURANTE',

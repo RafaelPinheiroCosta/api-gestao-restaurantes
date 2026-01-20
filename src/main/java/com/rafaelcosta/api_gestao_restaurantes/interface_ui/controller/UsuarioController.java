@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -36,10 +37,10 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    @Operation(summary = "Listar usuários", description = "Lista usuários paginados.")
+    @Operation(summary = "Listar usuários", description = "Lista usuários com paginação via query params page/size.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso",
-                    content = @Content(schema = @Schema(implementation = UsuarioResponse.class))),
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = UsuarioResponse.class)))),
             @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente/inválido)",
                     content = @Content(schema = @Schema(implementation = org.springframework.http.ProblemDetail.class))),
             @ApiResponse(responseCode = "403", description = "Acesso negado (sem permissão)",
@@ -79,7 +80,7 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Criar usuário", description = "Cria um novo usuário e retorna 201 com Location.")
+    @Operation(summary = "Criar usuário", description = "Cria um novo usuário e retorna 201 com header Location.")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Usuário criado",
                     content = @Content(schema = @Schema(implementation = UsuarioResponse.class))),
@@ -112,7 +113,8 @@ public class UsuarioController {
                 .body(response);
     }
 
-    @Operation(summary = "Atualizar perfil do usuário", description = "Atualiza nome/email/login/perfilTipo/endereço. Não altera senha.")
+    @Operation(summary = "Atualizar perfil do usuário",
+            description = "Atualiza nome/email/login/perfilTipo/endereço. Não altera senha.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Atualizado com sucesso",
                     content = @Content(schema = @Schema(implementation = UsuarioResponse.class))),
@@ -132,7 +134,8 @@ public class UsuarioController {
         return ResponseEntity.ok(atualizado);
     }
 
-    @Operation(summary = "Trocar senha", description = "Troca a senha do usuário, validando senha atual. Retorna 204 no sucesso.")
+    @Operation(summary = "Trocar senha",
+            description = "Troca a senha do usuário, validando senha atual. Retorna 204 no sucesso.")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Senha alterada com sucesso"),
             @ApiResponse(responseCode = "400", description = "Erro de validação",
@@ -159,10 +162,11 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Buscar usuários por nome", description = "Busca por nome com paginação.")
+    @Operation(summary = "Buscar usuários por nome",
+            description = "Busca por nome com paginação via query params page/size.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Busca realizada",
-                    content = @Content(schema = @Schema(implementation = UsuarioResponse.class))),
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = UsuarioResponse.class)))),
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos",
                     content = @Content(schema = @Schema(implementation = org.springframework.http.ProblemDetail.class)))
     })
@@ -175,7 +179,8 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.findByNome(nome, page, size));
     }
 
-    @Operation(summary = "Excluir usuário", description = "Exclui usuário por ID. Retorna 204 no sucesso.")
+    @Operation(summary = "Excluir usuário",
+            description = "Exclui usuário por ID. Retorna 204 no sucesso.")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Excluído com sucesso"),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
