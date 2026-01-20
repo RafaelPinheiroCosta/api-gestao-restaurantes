@@ -1,5 +1,6 @@
 package com.rafaelcosta.api_gestao_restaurantes.infrastructure.security;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,34 +35,58 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(usuarioDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
+
+        provider.setHideUserNotFoundExceptions(true);
+
         return new ProviderManager(provider);
     }
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.httpBasic(AbstractHttpConfigurer::disable);
+        http.formLogin(AbstractHttpConfigurer::disable);
+        http.logout(AbstractHttpConfigurer::disable);
 
         http.csrf(AbstractHttpConfigurer::disable);
-        http.sessionManagement(sm ->
-                sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
+
+        http.exceptionHandling(ex -> ex
+                .authenticationEntryPoint((request, response, authException) ->
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED))
+                .accessDeniedHandler((request, response, accessDeniedException) ->
+                        response.setStatus(HttpServletResponse.SC_FORBIDDEN))
+        );
 
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers("/api/v1/auth/**").permitAll()
 
-                .requestMatchers(HttpMethod.POST ,"/api/v1/usuarios")
-                    .hasRole("DONO_RESTAURANTE")
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
+                .permitAll()
+
+                .requestMatchers("/h2-console/**")
+                .permitAll()
+
+                .requestMatchers("/api/v1/auth/**")
+                .permitAll()
+
+                .requestMatchers(HttpMethod.POST, "/api/v1/usuarios")
+                .hasRole("DONO_RESTAURANTE")
+
                 .requestMatchers(HttpMethod.GET, "/api/v1/usuarios/**")
-                    .hasAnyRole("CLIENTE", "DONO_RESTAURANTE")
+                .hasAnyRole("CLIENTE", "DONO_RESTAURANTE")
+
                 .requestMatchers(HttpMethod.PUT, "/api/v1/usuarios/**")
-                    .hasAnyRole("DONO_RESTAURANTE")
+                .hasRole("DONO_RESTAURANTE")
+
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/usuarios/**")
-                .hasAnyRole("DONO_RESTAURANTE")
+                .hasRole("DONO_RESTAURANTE")
 
                 .anyRequest().authenticated()
         );
 
-        http.headers(headers ->
-                headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

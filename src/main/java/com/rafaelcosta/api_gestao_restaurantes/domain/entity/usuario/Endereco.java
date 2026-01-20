@@ -1,8 +1,6 @@
-package com.rafaelcosta.api_gestao_restaurantes.domain.entity;
+package com.rafaelcosta.api_gestao_restaurantes.domain.entity.usuario;
 
 import lombok.*;
-
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,6 +12,7 @@ public class Endereco {
     private String rua;
     private String numero;
     private String complemento;
+    private String bairro;
     private String cidade;
     private String estado;
     private String cep;

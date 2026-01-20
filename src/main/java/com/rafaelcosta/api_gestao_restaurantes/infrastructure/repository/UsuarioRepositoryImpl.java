@@ -1,7 +1,7 @@
 package com.rafaelcosta.api_gestao_restaurantes.infrastructure.repository;
 
-import com.rafaelcosta.api_gestao_restaurantes.domain.entity.Endereco;
-import com.rafaelcosta.api_gestao_restaurantes.domain.entity.Usuario;
+import com.rafaelcosta.api_gestao_restaurantes.domain.entity.usuario.Endereco;
+import com.rafaelcosta.api_gestao_restaurantes.domain.entity.usuario.Usuario;
 import com.rafaelcosta.api_gestao_restaurantes.domain.enuns.StatusCadastro;
 import com.rafaelcosta.api_gestao_restaurantes.domain.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +30,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                     .rua(rs.getString("e_rua"))
                     .numero(rs.getString("e_numero"))
                     .complemento(rs.getString("e_complemento"))
+                    .bairro(rs.getString("e_bairro"))
                     .cidade(rs.getString("e_cidade"))
                     .estado(rs.getString("e_estado"))
                     .cep(rs.getString("e_cep"))
@@ -59,7 +60,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             u.nome            AS u_nome,
             u.email           AS u_email,
             u.login           AS u_login,
-            u.perfil_tipo    AS u_perfil_tipo,
+            u.perfil_tipo     AS u_perfil_tipo,
             u.senha_hash      AS u_senha_hash,
             u.status_cadastro AS u_status_cadastro,
             u.criado_em       AS u_criado_em,
@@ -69,6 +70,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             e.rua             AS e_rua,
             e.numero          AS e_numero,
             e.complemento     AS e_complemento,
+            e.bairro          AS e_bairro,
             e.cidade          AS e_cidade,
             e.estado          AS e_estado,
             e.cep             AS e_cep
@@ -87,13 +89,14 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     @Override
     public List<Usuario> findAll(int size, int offset) {
         return jdbcClient.sql(
-                    BASE_SELECT + " ORDER BY u.criado_em DESC LIMIT :size OFFSET :offset"
+                        BASE_SELECT + " ORDER BY u.criado_em DESC LIMIT :size OFFSET :offset"
                 )
                 .param("size", size)
                 .param("offset", offset)
                 .query(USUARIO_MAPPER)
                 .list();
     }
+
     @Override
     public Optional<Usuario> findByLogin(String login) {
         return jdbcClient.sql(BASE_SELECT + " WHERE u.login = :login")
@@ -102,10 +105,92 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .optional();
     }
 
+    @Override
+    public Optional<Usuario> findByEmail(String email) {
+        return jdbcClient.sql(BASE_SELECT + " WHERE LOWER(u.email) = LOWER(:email)")
+                .param("email", email)
+                .query(USUARIO_MAPPER)
+                .optional();
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        Integer count = jdbcClient.sql("SELECT COUNT(1) FROM usuarios WHERE LOWER(email) = LOWER(:email)")
+                .param("email", email)
+                .query(Integer.class)
+                .single();
+        return count != null && count > 0;
+    }
+
+    @Override
+    public boolean existsByLogin(String login) {
+        Integer count = jdbcClient.sql("SELECT COUNT(1) FROM usuarios WHERE LOWER(login) = LOWER(:login)")
+                .param("login", login)
+                .query(Integer.class)
+                .single();
+        return count != null && count > 0;
+    }
+
+    @Override
+    public boolean existsByEmailAndIdNot(String email, UUID id) {
+        Integer count = jdbcClient.sql("""
+                        SELECT COUNT(1)
+                        FROM usuarios
+                        WHERE LOWER(email) = LOWER(:email)
+                          AND id <> :id
+                        """)
+                .param("email", email)
+                .param("id", id.toString())
+                .query(Integer.class)
+                .single();
+        return count != null && count > 0;
+    }
+
+    @Override
+    public boolean existsByLoginAndIdNot(String login, UUID id) {
+        Integer count = jdbcClient.sql("""
+                        SELECT COUNT(1)
+                        FROM usuarios
+                        WHERE LOWER(login) = LOWER(:login)
+                          AND id <> :id
+                        """)
+                .param("login", login)
+                .param("id", id.toString())
+                .query(Integer.class)
+                .single();
+        return count != null && count > 0;
+    }
+
+    @Override
+    public List<Usuario> findByNome(String nome, int size, int offset) {
+        return jdbcClient.sql(BASE_SELECT + """
+            WHERE LOWER(u.nome) LIKE LOWER(:nome)
+            ORDER BY u.criado_em DESC
+            LIMIT :size OFFSET :offset
+            """)
+                .param("nome", "%" + nome + "%")
+                .param("size", size)
+                .param("offset", offset)
+                .query(USUARIO_MAPPER)
+                .list();
+    }
+
+    @Override
+    public void updateSenhaHash(UUID id, String senhaHash) {
+        jdbcClient.sql("""
+            UPDATE usuarios
+            SET senha_hash = :senhaHash,
+                atualizado_em = :atualizadoEm
+            WHERE id = :id
+            """)
+                .param("id", id.toString())
+                .param("senhaHash", senhaHash)
+                .param("atualizadoEm", LocalDateTime.now())
+                .update();
+    }
 
     @Override
     public Optional<Usuario> save(Usuario usuario) {
-        //provisorio para garantir que o ID não seja nulo
         UUID id = usuario.getId() != null ? usuario.getId() : UUID.randomUUID();
 
         jdbcClient.sql("""
@@ -125,18 +210,9 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .param("perfilTipo", usuario.getPerfilTipo())
                 .param("senhaHash", usuario.getSenhaHash())
                 .param("statusCadastro", usuario.getStatusCadastro().name())
-                .param(
-                        "enderecoId", usuario.getEndereco() != null ?
-                                usuario.getEndereco().getId() : null
-                )
-                .param(
-                        "criadoEm", usuario.getCriadoEm() != null ?
-                                usuario.getCriadoEm() : LocalDateTime.now()
-                )
-                .param(
-                        "atualizadoEm", usuario.getAtualizadoEm() != null ?
-                                usuario.getAtualizadoEm() : LocalDateTime.now()
-                )
+                .param("enderecoId", usuario.getEndereco() != null ? usuario.getEndereco().getId() : null)
+                .param("criadoEm", usuario.getCriadoEm() != null ? usuario.getCriadoEm() : LocalDateTime.now())
+                .param("atualizadoEm", usuario.getAtualizadoEm() != null ? usuario.getAtualizadoEm() : LocalDateTime.now())
                 .update();
 
         return findById(id);
@@ -163,10 +239,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .param("perfilTipo", usuario.getPerfilTipo())
                 .param("senhaHash", usuario.getSenhaHash())
                 .param("statusCadastro", usuario.getStatusCadastro().name())
-                .param(
-                        "enderecoId", usuario.getEndereco() != null ?
-                                usuario.getEndereco().getId() : null
-                )
+                .param("enderecoId", usuario.getEndereco() != null ? usuario.getEndereco().getId() : null)
                 .param("atualizadoEm", LocalDateTime.now())
                 .update();
 

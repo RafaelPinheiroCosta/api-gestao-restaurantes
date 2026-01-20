@@ -1,9 +1,8 @@
 package com.rafaelcosta.api_gestao_restaurantes.application.mapper;
 
-import com.rafaelcosta.api_gestao_restaurantes.domain.entity.Endereco;
-import com.rafaelcosta.api_gestao_restaurantes.domain.entity.Usuario;
+import com.rafaelcosta.api_gestao_restaurantes.domain.entity.usuario.Endereco;
+import com.rafaelcosta.api_gestao_restaurantes.domain.entity.usuario.Usuario;
 import com.rafaelcosta.api_gestao_restaurantes.application.dto.*;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,11 +21,15 @@ public class UsuarioMapper {
                 u.getAtualizadoEm()
         );
     }
+
     public Endereco toEndereco(EnderecoRequest e) {
+        if (e == null) return null;
+
         return Endereco.builder()
                 .rua(e.rua())
                 .numero(e.numero())
                 .complemento(e.complemento())
+                .bairro(e.bairro())
                 .cidade(e.cidade())
                 .estado(e.estado())
                 .cep(e.cep())
@@ -39,6 +42,7 @@ public class UsuarioMapper {
                 e.getRua(),
                 e.getNumero(),
                 e.getComplemento(),
+                e.getBairro(),
                 e.getCidade(),
                 e.getEstado(),
                 e.getCep()

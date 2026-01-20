@@ -1,8 +1,8 @@
 -- Endereço 1
-INSERT INTO enderecos (rua, numero, complemento, cidade, estado, cep)
-VALUES ('Rua A', '100', 'Apto 12', 'São Paulo', 'SP', '01010-000');
+INSERT INTO enderecos (rua, numero, complemento, cidade,bairro, estado, cep)
+VALUES ('Rua A', '100', 'Apto 12', 'São Paulo','Se', 'SP', '01010-000');
 
--- Usuário 1 (com endereço)
+-- Usuario 1 (com endereço)
 INSERT INTO usuarios (
     id, nome, email, login, senha_hash, status_cadastro,
     perfil_tipo, endereco_id, criado_em, atualizado_em
@@ -21,7 +21,7 @@ VALUES (
 );
 
 
--- Usuário 2 (sem endereço) - para testar LEFT JOIN funcionando
+-- Usuario 2 (sem endereço) - para testar LEFT JOIN funcionando
 INSERT INTO usuarios (
     id, nome, email, login, senha_hash, status_cadastro,
     perfil_tipo, endereco_id, criado_em, atualizado_em

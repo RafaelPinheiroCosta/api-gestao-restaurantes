@@ -1,8 +1,8 @@
-package com.rafaelcosta.api_gestao_restaurantes.domain.entity;
+package com.rafaelcosta.api_gestao_restaurantes.domain.entity.usuario;
 
 import com.rafaelcosta.api_gestao_restaurantes.domain.enuns.StatusCadastro;
-import com.rafaelcosta.api_gestao_restaurantes.domain.perfil.Perfil;
-import com.rafaelcosta.api_gestao_restaurantes.domain.perfil.Perfis;
+import com.rafaelcosta.api_gestao_restaurantes.domain.entity.usuario.perfil.Perfil;
+import com.rafaelcosta.api_gestao_restaurantes.domain.entity.usuario.perfil.Perfis;
 import lombok.*;
 
 import java.time.LocalDateTime;

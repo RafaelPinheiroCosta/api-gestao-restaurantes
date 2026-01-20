@@ -1,6 +1,6 @@
 package com.rafaelcosta.api_gestao_restaurantes.infrastructure.repository;
 
-import com.rafaelcosta.api_gestao_restaurantes.domain.entity.Endereco;
+import com.rafaelcosta.api_gestao_restaurantes.domain.entity.usuario.Endereco;
 import com.rafaelcosta.api_gestao_restaurantes.domain.repository.EnderecoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;
@@ -25,12 +25,13 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
     @Override
     public Long save(Endereco e) {
         jdbcClient.sql("""
-                INSERT INTO enderecos (rua, numero, complemento, cidade, estado, cep)
-                VALUES (:rua, :numero, :complemento, :cidade, :estado, :cep)
+                INSERT INTO enderecos (rua, numero, complemento, bairro, cidade, estado, cep)
+                VALUES (:rua, :numero, :complemento, :bairro, :cidade, :estado, :cep)
                 """)
                 .param("rua", e.getRua())
                 .param("numero", e.getNumero())
                 .param("complemento", e.getComplemento())
+                .param("bairro", e.getBairro())
                 .param("cidade", e.getCidade())
                 .param("estado", e.getEstado())
                 .param("cep", e.getCep())
@@ -48,6 +49,7 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
                 SET rua = :rua,
                     numero = :numero,
                     complemento = :complemento,
+                    bairro = :bairro,
                     cidade = :cidade,
                     estado = :estado,
                     cep = :cep
@@ -57,6 +59,7 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
                 .param("rua", e.getRua())
                 .param("numero", e.getNumero())
                 .param("complemento", e.getComplemento())
+                .param("bairro", e.getBairro())
                 .param("cidade", e.getCidade())
                 .param("estado", e.getEstado())
                 .param("cep", e.getCep())

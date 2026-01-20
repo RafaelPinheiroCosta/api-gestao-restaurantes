@@ -1,6 +1,6 @@
 package com.rafaelcosta.api_gestao_restaurantes.domain.repository;
 
-import com.rafaelcosta.api_gestao_restaurantes.domain.entity.Endereco;
+import com.rafaelcosta.api_gestao_restaurantes.domain.entity.usuario.Endereco;
 import java.util.Optional;
 
 public interface EnderecoRepository {

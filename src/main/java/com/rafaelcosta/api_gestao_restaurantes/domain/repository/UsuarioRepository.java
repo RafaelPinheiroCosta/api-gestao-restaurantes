@@ -1,12 +1,24 @@
 package com.rafaelcosta.api_gestao_restaurantes.domain.repository;
 
-import com.rafaelcosta.api_gestao_restaurantes.domain.entity.Usuario;
+import com.rafaelcosta.api_gestao_restaurantes.domain.entity.usuario.Usuario;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface UsuarioRepository {
+
+    Optional<Usuario> findByEmail(String email);
+
+    boolean existsByEmail(String email);
+    boolean existsByLogin(String login);
+
+    boolean existsByEmailAndIdNot(String email, UUID id);
+    boolean existsByLoginAndIdNot(String login, UUID id);
+
+    void updateSenhaHash(UUID id, String senhaHash);
+
+    List<Usuario> findByNome(String nome, int size, int offset);
 
     List<Usuario> findAll(int size, int offset);
 

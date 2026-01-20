@@ -88,8 +88,8 @@ Campos principais:
 
 Nesta fase, a aplicação utiliza:
 - **H2 em memória**, com inicialização automática via:
-    - `schema.sql`
-    - `data.sql`
+    - `schema-mysql.sql`
+    - `data-mysql.sql`
 
 Essa abordagem facilita os testes locais e a validação dos endpoints via Postman.
 

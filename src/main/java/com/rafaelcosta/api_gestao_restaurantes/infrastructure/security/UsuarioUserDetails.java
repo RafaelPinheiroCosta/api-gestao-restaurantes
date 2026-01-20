@@ -1,6 +1,6 @@
 package com.rafaelcosta.api_gestao_restaurantes.infrastructure.security;
 
-import com.rafaelcosta.api_gestao_restaurantes.domain.entity.Usuario;
+import com.rafaelcosta.api_gestao_restaurantes.domain.entity.usuario.Usuario;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
