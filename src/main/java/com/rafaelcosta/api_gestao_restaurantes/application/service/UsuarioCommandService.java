@@ -34,15 +34,21 @@ public class UsuarioCommandService {
     public UsuarioResponse create(UsuarioRequest request) {
         uniquenessValidator.validateForCreate(request.email(), request.login());
 
-        Endereco endereco = enderecoManager.upsertEndereco(null, request.endereco());
+        UUID novoId = UUID.randomUUID();
 
-        Usuario novo = buildNewUsuario(request, endereco);
+        Usuario novo = buildNewUsuarioWithId(request, novoId);
 
         Usuario salvo = usuarioRepository.save(novo)
                 .orElseThrow(() -> new IllegalStateException("Falha ao salvar usuário"));
 
-        return usuarioMapper.toResponse(salvo);
+        Endereco endereco = enderecoManager.upsertEndereco(salvo.getId(), null, request.endereco());
+
+        Usuario recarregado = usuarioRepository.findById(salvo.getId())
+                .orElseThrow(() -> new IllegalStateException("Usuário recém-criado não encontrado"));
+
+        return usuarioMapper.toResponse(recarregado);
     }
+
 
     @Transactional
     public UsuarioResponse updatePerfil(UUID id, UsuarioUpdateRequest request) {
@@ -50,7 +56,8 @@ public class UsuarioCommandService {
 
         uniquenessValidator.validateForUpdate(id, request.email(), request.login());
 
-        Endereco enderecoAtualizado = enderecoManager.upsertEndereco(atual.getEndereco(), request.endereco());
+        Endereco enderecoAtualizado =
+                enderecoManager.upsertEndereco(atual.getId(), atual.getEndereco(), request.endereco());
 
         Usuario paraSalvar = buildUpdatedUsuario(atual, request, enderecoAtualizado);
 
@@ -71,18 +78,18 @@ public class UsuarioCommandService {
                 .orElseThrow(() -> new UsuarioNaoEncontradoException(id.toString()));
     }
 
-    private Usuario buildNewUsuario(UsuarioRequest request, Endereco endereco) {
+    private Usuario buildNewUsuarioWithId(UsuarioRequest request, UUID id) {
         LocalDateTime now = LocalDateTime.now();
 
         return Usuario.builder()
-                .id(UUID.randomUUID())
+                .id(id)
                 .nome(request.nome())
                 .email(request.email())
                 .login(request.login())
                 .perfilTipo(defaultIfNull(request.perfilTipo(), PERFIL_PADRAO))
                 .senhaHash(passwordEncoder.encode(request.senha()))
                 .statusCadastro(StatusCadastro.PENDENTE)
-                .endereco(endereco)
+                .endereco(null)
                 .criadoEm(now)
                 .atualizadoEm(now)
                 .build();

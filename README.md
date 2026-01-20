@@ -111,8 +111,8 @@ Campos principais:
 Durante o desenvolvimento e testes, a aplicação utiliza:
 
 - **H2 em memória**, com estruturação e inicialização de alguns dados de forma automática via:
-  - `schema-h2.sql`
-  - `data-h2.sql`
+  - `schema.sql`
+  - `data.sql`
 
 A aplicação também está preparada para execução com **banco de dados relacional em ambiente containerizado**, utilizando **Docker** e **MySQL**, conforme configuração disponível no repositório.
 
@@ -127,7 +127,7 @@ Os endpoints podem ser testados utilizando:
 - Postman
 - Insomnia
 
-O repositório disponibiliza uma **coleção de testes em formato JSON para Postman**, permitindo validar todos os endpoints implementados.
+O repositório disponibiliza uma **coleção de testes em formato JSON para Postman** [link](src/postman/postamn_collection_api_restaurantes.json), permitindo validar todos os endpoints implementados.
 
 A API segue o padrão **REST** e utiliza **JSON** como formato de comunicação.
 

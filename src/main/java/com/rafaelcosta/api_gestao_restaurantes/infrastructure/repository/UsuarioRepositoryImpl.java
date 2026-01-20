@@ -75,7 +75,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
             e.estado          AS e_estado,
             e.cep             AS e_cep
         FROM usuarios u
-        LEFT JOIN enderecos e ON e.id = u.endereco_id
+        LEFT JOIN enderecos e ON e.usuario_id = u.id
         """;
 
     @Override
@@ -196,11 +196,11 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         jdbcClient.sql("""
                         INSERT INTO usuarios (
                             id, nome, email, login, senha_hash, status_cadastro,
-                            perfil_tipo, endereco_id, criado_em, atualizado_em
+                            perfil_tipo, criado_em, atualizado_em
                         )
                         VALUES (
                             :id, :nome, :email, :login, :senhaHash, :statusCadastro,
-                            :perfilTipo, :enderecoId, :criadoEm, :atualizadoEm
+                            :perfilTipo, :criadoEm, :atualizadoEm
                         )
                 """)
                 .param("id", id.toString())
@@ -210,7 +210,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .param("perfilTipo", usuario.getPerfilTipo())
                 .param("senhaHash", usuario.getSenhaHash())
                 .param("statusCadastro", usuario.getStatusCadastro().name())
-                .param("enderecoId", usuario.getEndereco() != null ? usuario.getEndereco().getId() : null)
                 .param("criadoEm", usuario.getCriadoEm() != null ? usuario.getCriadoEm() : LocalDateTime.now())
                 .param("atualizadoEm", usuario.getAtualizadoEm() != null ? usuario.getAtualizadoEm() : LocalDateTime.now())
                 .update();
@@ -228,7 +227,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                     perfil_tipo = :perfilTipo,
                     senha_hash = :senhaHash,
                     status_cadastro = :statusCadastro,
-                    endereco_id = :enderecoId,
                     atualizado_em = :atualizadoEm
                 WHERE id = :id
                 """)
@@ -239,7 +237,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .param("perfilTipo", usuario.getPerfilTipo())
                 .param("senhaHash", usuario.getSenhaHash())
                 .param("statusCadastro", usuario.getStatusCadastro().name())
-                .param("enderecoId", usuario.getEndereco() != null ? usuario.getEndereco().getId() : null)
                 .param("atualizadoEm", LocalDateTime.now())
                 .update();
 

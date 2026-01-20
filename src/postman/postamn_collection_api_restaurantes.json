@@ -1,0 +1,1135 @@
+{
+  "collection": {
+    "info": {
+      "_postman_id": "5fb06058-96ec-49f5-af55-e5d60fe33ebf",
+      "name": "API - Gestão de Restaurantes",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "createdAt": "2026-01-14T13:50:41.000Z",
+      "updatedAt": "2026-01-20T17:18:57.000Z",
+      "lastUpdatedBy": "36899625",
+      "uid": "36899625-5fb06058-96ec-49f5-af55-e5d60fe33ebf"
+    },
+    "item": [
+      {
+        "name": "Usuários",
+        "item": [
+          {
+            "name": "Usuário: Cadastro ok",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "exec": [
+                    "pm.test(\"Status deve ser 201\", function () {\r",
+                    "  pm.expect([201]).to.include(pm.response.code);\r",
+                    "});\r",
+                    "\r",
+                    "const body = pm.response.json();\r",
+                    "\r",
+                    "pm.test(\"Resposta deve ter id\", function () {\r",
+                    "  pm.expect(body).to.have.property(\"id\");\r",
+                    "});\r",
+                    "\r",
+                    "pm.collectionVariables.set(\"usuarioId\", body.id);\r",
+                    "pm.collectionVariables.set(\"usuario_login\", body.login);\r",
+                    "pm.collectionVariables.set(\"usuario_email\", body.email);\r",
+                    "pm.collectionVariables.set(\"usuario_nome\", body.nome);\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "4fed7fdb-dadd-43c2-b447-1194fabd4b1e",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{jwt_token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n  \"nome\": \"Rafael Costa\",\r\n  \"email\": \"rafael.costa@example.com\",\r\n  \"login\": \"rafael.costa\",\r\n  \"senha\": \"Senha@123\",\r\n  \"perfilTipo\": \"DONO_RESTAURANTE\",\r\n  \"endereco\": {\r\n    \"rua\": \"Rua das Flores\",\r\n    \"numero\": \"123\",\r\n    \"complemento\": \"Apto 12\",\r\n    \"bairro\": \"Centro\",\r\n    \"cidade\": \"São Paulo\",\r\n    \"estado\": \"SP\",\r\n    \"cep\": \"01000-000\"\r\n  }\r\n}\r\n",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/usuarios",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "usuarios"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-14T14:04:45.000Z",
+            "updatedAt": "2026-01-20T03:30:12.000Z",
+            "uid": "36899625-4fed7fdb-dadd-43c2-b447-1194fabd4b1e"
+          },
+          {
+            "name": "Usuário: Cadastro sem endereço ok",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "exec": [
+                    "pm.test(\"Status deve ser 201\", function () {\r",
+                    "  pm.expect([201]).to.include(pm.response.code);\r",
+                    "});\r",
+                    "\r",
+                    "const body = pm.response.json();\r",
+                    "\r",
+                    "pm.test(\"Resposta deve ter id\", function () {\r",
+                    "  pm.expect(body).to.have.property(\"id\");\r",
+                    "});\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "7fa6adb0-6fed-4865-93c4-c10db77cf4c3",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{jwt_token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n  \"nome\": \"Maria Silva\",\r\n  \"email\": \"maria.silva@example.com\",\r\n  \"login\": \"maria.silva\",\r\n  \"senha\": \"Senha@123\",\r\n  \"perfilTipo\": \"CLIENTE\"\r\n}\r\n",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/usuarios",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "usuarios"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-15T18:37:10.000Z",
+            "updatedAt": "2026-01-15T21:25:04.000Z",
+            "uid": "36899625-7fa6adb0-6fed-4865-93c4-c10db77cf4c3"
+          },
+          {
+            "name": "Usuário: Cadastro faltando dados",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "exec": [
+                    "pm.test(\"Deve falhar com 400\", function () {\r",
+                    "  pm.expect(pm.response.code).to.equal(400);\r",
+                    "});\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "d6f29e50-2fbd-487f-b52d-ae97373ac62b",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{jwt_token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n  \"nome\": \"\",\r\n  \"email\": \"email_errado\",\r\n  \"login\": \"\",\r\n  \"senha\": \"\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/usuarios",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "usuarios"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-15T18:38:16.000Z",
+            "updatedAt": "2026-01-20T03:51:34.000Z",
+            "uid": "36899625-d6f29e50-2fbd-487f-b52d-ae97373ac62b"
+          },
+          {
+            "name": "Usuário: Cadastro com login e email duplicado",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "exec": [
+                    "pm.test(\"Duplicado deve dar erro (ideal 409)\", function () {\r",
+                    "  pm.expect([400, 409, 500]).to.include(pm.response.code);\r",
+                    "});"
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "6c0987e2-6317-4dc0-822d-5d393086754b",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{jwt_token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n  \"nome\": \"Duplicado\",\r\n  \"email\": \"{{usuario_email}}\",\r\n  \"login\": \"{{usuario_login}}\",\r\n  \"senha\": \"Senha@123\",  \r\n  \"perfilTipo\": \"CLIENTE\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/usuarios",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "usuarios"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-15T18:40:56.000Z",
+            "updatedAt": "2026-01-19T18:05:40.000Z",
+            "uid": "36899625-6c0987e2-6317-4dc0-822d-5d393086754b"
+          },
+          {
+            "name": "Usuário: Alterar nome",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "exec": [
+                    "pm.test(\"Status deve ser 200\", function () {\r",
+                    "  pm.expect([200]).to.include(pm.response.code);\r",
+                    "});\r",
+                    "\r",
+                    "const body = pm.response.json();\r",
+                    "\r",
+                    "pm.test(\"Resposta deve ter id\", function () {\r",
+                    "  pm.expect(body).to.have.property(\"id\");\r",
+                    "});\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "74d70b1e-c361-46b8-8281-60a57002585c",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{jwt_token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "PUT",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n  \"nome\": \"Rafael Pinheiro Costa\"\r\n}\r\n",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/usuarios/{{usuarioId}}",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "usuarios",
+                  "{{usuarioId}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-15T20:47:45.000Z",
+            "updatedAt": "2026-01-20T03:47:34.000Z",
+            "uid": "36899625-74d70b1e-c361-46b8-8281-60a57002585c"
+          },
+          {
+            "name": "Usuário: Alterar senha",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "exec": [
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "35f004e5-e9bc-4d9c-9f2d-4897a2e365a8",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{jwt_token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "PUT",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n  \"senhaAtual\": \"Senha@123\",\r\n  \"novaSenha\": \"NovaSenha@123\"\r\n}\r\n",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/usuarios/{{usuarioId}}}/senha",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "usuarios",
+                  "{{usuarioId}}}",
+                  "senha"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-20T03:44:16.000Z",
+            "updatedAt": "2026-01-20T04:51:28.000Z",
+            "uid": "36899625-35f004e5-e9bc-4d9c-9f2d-4897a2e365a8"
+          },
+          {
+            "name": "Usuário: Usuario não encontrado",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "exec": [
+                    "pm.test(\"Status deve ser 200\", function () {\r",
+                    "  pm.expect([200]).to.include(pm.response.code);\r",
+                    "});\r",
+                    "\r",
+                    "const body = pm.response.json();\r",
+                    "\r",
+                    "pm.test(\"Resposta deve ter id\", function () {\r",
+                    "  pm.expect(body).to.have.property(\"id\");\r",
+                    "});\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "40dfb1a6-7d6c-42b1-b659-dee9270b2615",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{jwt_token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "PUT",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n  \"nome\": \"Rafael Pinheiro Costa\"\r\n}\r\n",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/usuarios/00000000-1111-1111-1111-111111111111",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "usuarios",
+                  "00000000-1111-1111-1111-111111111111"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-15T21:22:23.000Z",
+            "updatedAt": "2026-01-20T16:04:48.000Z",
+            "uid": "36899625-40dfb1a6-7d6c-42b1-b659-dee9270b2615"
+          },
+          {
+            "name": "Usuário: Listar todos ok",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "1c47a3c5-73fc-4521-b99c-4bc269b38ad1",
+                  "exec": [
+                    "pm.test(\"Status 200\", () =\u003E pm.expect(pm.response.code).to.equal(200));\r",
+                    "\r",
+                    "pm.test(\"Resposta deve ser array\", () =\u003E pm.expect(pm.response.json()).to.be.an(\"array\"));\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "2d7c17aa-c2c7-4776-a820-907dfe176c93",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{jwt_token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": ""
+              },
+              "url": {
+                "raw": "{{baseUrl}}/usuarios?page=1&size=10",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "usuarios"
+                ],
+                "query": [
+                  {
+                    "key": "page",
+                    "value": "1"
+                  },
+                  {
+                    "key": "size",
+                    "value": "10"
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-14T13:51:21.000Z",
+            "updatedAt": "2026-01-15T21:23:57.000Z",
+            "uid": "36899625-2d7c17aa-c2c7-4776-a820-907dfe176c93"
+          },
+          {
+            "name": "Usuario: Buscar por id ok",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "f0f41bc7-2b83-41e2-a74a-69ca6eff0a50",
+                  "exec": [
+                    "pm.test(\"Status 200\", () =\u003E pm.expect(pm.response.code).to.equal(200));\r",
+                    "const body = pm.response.json();\r",
+                    "\r",
+                    "pm.test(\"ID deve bater\", () =\u003E pm.expect(body.id).to.equal(pm.collectionVariables.get(\"usuario_id\")));\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "baa3fba1-fb8b-4109-b2b6-550f6a37f477",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{jwt_token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/usuarios/{{usuarioId}}",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "usuarios",
+                  "{{usuarioId}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-14T14:00:45.000Z",
+            "updatedAt": "2026-01-15T21:24:06.000Z",
+            "uid": "36899625-baa3fba1-fb8b-4109-b2b6-550f6a37f477"
+          },
+          {
+            "name": "Usuario: Buscar por nome ok",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "f0f41bc7-2b83-41e2-a74a-69ca6eff0a50",
+                  "exec": [
+                    "pm.test(\"Status 200\", () =\u003E pm.expect(pm.response.code).to.equal(200));\r",
+                    "const body = pm.response.json();\r",
+                    "\r",
+                    "pm.test(\"Nome deve bater\", () =\u003E pm.expect(body.nome).to.equal(pm.collectionVariables.get(\"usuario_nome\")));\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "23e83e1c-134a-441b-9dc7-1b5f9e032c3a",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{jwt_token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/usuarios/busca?nome={{usuario_nome}}&page=1&size=10",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "usuarios",
+                  "busca"
+                ],
+                "query": [
+                  {
+                    "key": "nome",
+                    "value": "{{usuario_nome}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "page",
+                    "value": "1",
+                    "type": "text"
+                  },
+                  {
+                    "key": "size",
+                    "value": "10",
+                    "type": "text"
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-20T03:27:15.000Z",
+            "updatedAt": "2026-01-20T03:37:13.000Z",
+            "uid": "36899625-23e83e1c-134a-441b-9dc7-1b5f9e032c3a"
+          },
+          {
+            "name": "Usuário: Exclusão ok",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "f0f41bc7-2b83-41e2-a74a-69ca6eff0a50",
+                  "exec": [
+                    "pm.test(\"Status deve ser 204 ou 200\", function () {\r",
+                    "  pm.expect([204, 200]).to.include(pm.response.code);\r",
+                    "});\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "fec942f3-0244-40f8-b590-6f2c7d6e0a14",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{jwt_token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "DELETE",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/usuarios/{{usuarioId}}",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "usuarios",
+                  "{{usuarioId}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-15T21:05:03.000Z",
+            "updatedAt": "2026-01-15T21:24:14.000Z",
+            "uid": "36899625-fec942f3-0244-40f8-b590-6f2c7d6e0a14"
+          },
+          {
+            "name": "Usuário: Usuário não encontrado",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "f0f41bc7-2b83-41e2-a74a-69ca6eff0a50",
+                  "exec": [
+                    "pm.test(\"Status deve ser 404\", function () {\r",
+                    "  pm.expect([404]).to.include(pm.response.code);\r",
+                    "});\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "df377ac9-7f74-4204-8da8-9863cb8e818a",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{jwt_token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "DELETE",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/usuarios/{{usuarioId}}",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "usuarios",
+                  "{{usuarioId}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-15T21:02:52.000Z",
+            "updatedAt": "2026-01-15T21:24:30.000Z",
+            "uid": "36899625-df377ac9-7f74-4204-8da8-9863cb8e818a"
+          }
+        ],
+        "id": "7c05facd-6aab-49c9-8c76-e8635a131fc7",
+        "createdAt": "2026-01-14T13:59:06.000Z",
+        "updatedAt": "2026-01-20T03:44:16.000Z",
+        "uid": "36899625-7c05facd-6aab-49c9-8c76-e8635a131fc7"
+      },
+      {
+        "name": "Auth",
+        "item": [
+          {
+            "name": "Auth/Login: Acesso ok",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "dbf86969-1cd8-463c-95e4-6dcf051a12f4",
+                  "exec": [
+                    "pm.test(\"Login retornou 200\", function () {\r",
+                    "  pm.response.to.have.status(200);\r",
+                    "});\r",
+                    "\r",
+                    "const json = pm.response.json();\r",
+                    "\r",
+                    "// Validação simples do payload\r",
+                    "pm.test(\"Resposta contém token\", function () {\r",
+                    "  pm.expect(json).to.have.property(\"token\");\r",
+                    "  pm.expect(json.token).to.be.a(\"string\");\r",
+                    "  pm.expect(json.token.length).to.be.greaterThan(20);\r",
+                    "});\r",
+                    "\r",
+                    "// Salva token em variável de coleção\r",
+                    "pm.collectionVariables.set(\"jwt_token\", json.token);\r",
+                    "\r",
+                    "console.log(\"Token salvo na coleção em jwt_token\");\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "a8a3557c-4c56-4fc8-9d63-b83d904f4c0e",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "noauth"
+              },
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n  \"login\": \"dono\",\r\n  \"senha\": \"Senha@123\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/auth/login",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "auth",
+                  "login"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-15T15:44:04.000Z",
+            "updatedAt": "2026-01-20T16:07:53.000Z",
+            "uid": "36899625-a8a3557c-4c56-4fc8-9d63-b83d904f4c0e"
+          },
+          {
+            "name": "Auth/Login: Acesso com senha errada",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "dbf86969-1cd8-463c-95e4-6dcf051a12f4",
+                  "exec": [
+                    "pm.test(\"Login retornou 200\", function () {\r",
+                    "  pm.response.to.have.status(200);\r",
+                    "});\r",
+                    "\r",
+                    "const json = pm.response.json();\r",
+                    "\r",
+                    "// Validação simples do payload\r",
+                    "pm.test(\"Resposta contém token\", function () {\r",
+                    "  pm.expect(json).to.have.property(\"token\");\r",
+                    "  pm.expect(json.token).to.be.a(\"string\");\r",
+                    "  pm.expect(json.token.length).to.be.greaterThan(20);\r",
+                    "});\r",
+                    "\r",
+                    "// Salva token em variável de coleção\r",
+                    "pm.collectionVariables.set(\"jwt_token\", json.token);\r",
+                    "\r",
+                    "console.log(\"Token salvo na coleção em jwt_token\");\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "3e00b7cd-fdfe-4851-b58b-848ccf26a593",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "noauth"
+              },
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n  \"login\": \"maria\",\r\n  \"senha\": \"SenhaErrada\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/auth/login",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "auth",
+                  "login"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-15T21:18:52.000Z",
+            "updatedAt": "2026-01-15T21:21:31.000Z",
+            "uid": "36899625-3e00b7cd-fdfe-4851-b58b-848ccf26a593"
+          },
+          {
+            "name": "Auth/Login: Acesso com login errado",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "dbf86969-1cd8-463c-95e4-6dcf051a12f4",
+                  "exec": [
+                    "pm.test(\"Login retornou 200\", function () {\r",
+                    "  pm.response.to.have.status(200);\r",
+                    "});\r",
+                    "\r",
+                    "const json = pm.response.json();\r",
+                    "\r",
+                    "// Validação simples do payload\r",
+                    "pm.test(\"Resposta contém token\", function () {\r",
+                    "  pm.expect(json).to.have.property(\"token\");\r",
+                    "  pm.expect(json.token).to.be.a(\"string\");\r",
+                    "  pm.expect(json.token.length).to.be.greaterThan(20);\r",
+                    "});\r",
+                    "\r",
+                    "// Salva token em variável de coleção\r",
+                    "pm.collectionVariables.set(\"jwt_token\", json.token);\r",
+                    "\r",
+                    "console.log(\"Token salvo na coleção em jwt_token\");\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {
+
+                  },
+                  "requests": {
+
+                  }
+                }
+              }
+            ],
+            "id": "e0494afd-c78e-4a68-8b89-26017b771cf2",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "noauth"
+              },
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n  \"login\": \"NomeErrado\",\r\n  \"senha\": \"Senha@123\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{baseUrl}}/auth/login",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "auth",
+                  "login"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-15T21:18:58.000Z",
+            "updatedAt": "2026-01-15T21:21:26.000Z",
+            "uid": "36899625-e0494afd-c78e-4a68-8b89-26017b771cf2"
+          }
+        ],
+        "id": "9c6d43e2-1aeb-4848-83e0-25958e2a13f0",
+        "createdAt": "2026-01-15T15:43:35.000Z",
+        "updatedAt": "2026-01-15T21:18:58.000Z",
+        "uid": "36899625-9c6d43e2-1aeb-4848-83e0-25958e2a13f0"
+      }
+    ],
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "id": "96bb9a48-afc7-4e89-8a2a-6de201662f8b",
+          "type": "text/javascript",
+          "packages": {
+
+          },
+          "requests": {
+
+          },
+          "exec": [
+            ""
+          ]
+        }
+      },
+      {
+        "listen": "test",
+        "script": {
+          "id": "00befc7a-35a2-4cc1-8bd0-3f7d9e3af766",
+          "type": "text/javascript",
+          "packages": {
+
+          },
+          "requests": {
+
+          },
+          "exec": [
+            ""
+          ]
+        }
+      }
+    ],
+    "variable": [
+      {
+        "key": "usuarioId",
+        "value": ""
+      },
+      {
+        "key": "jwt_token",
+        "value": ""
+      },
+      {
+        "key": "baseUrl",
+        "value": ""
+      },
+      {
+        "key": "usuario_login",
+        "value": ""
+      },
+      {
+        "key": "usuario_email",
+        "value": ""
+      },
+      {
+        "key": "usuario_nome",
+        "value": "",
+        "type": "default"
+      }
+    ]
+  }
+}

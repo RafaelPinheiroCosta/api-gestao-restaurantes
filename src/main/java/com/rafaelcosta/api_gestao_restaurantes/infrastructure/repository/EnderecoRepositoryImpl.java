@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -23,11 +24,21 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
     }
 
     @Override
-    public Long save(Endereco e) {
+    public Optional<Endereco> findByUsuarioId(UUID usuarioId) {
+        return jdbcClient.sql("SELECT * FROM enderecos WHERE usuario_id = :usuarioId")
+                .param("usuarioId", usuarioId.toString())
+                .query(Endereco.class)
+                .optional();
+    }
+
+    @Override
+    public Long save(UUID usuarioId, Endereco e) {
+
         jdbcClient.sql("""
-                INSERT INTO enderecos (rua, numero, complemento, bairro, cidade, estado, cep)
-                VALUES (:rua, :numero, :complemento, :bairro, :cidade, :estado, :cep)
+                INSERT INTO enderecos (usuario_id, rua, numero, complemento, bairro, cidade, estado, cep)
+                VALUES (:usuarioId, :rua, :numero, :complemento, :bairro, :cidade, :estado, :cep)
                 """)
+                .param("usuarioId", usuarioId.toString())
                 .param("rua", e.getRua())
                 .param("numero", e.getNumero())
                 .param("complemento", e.getComplemento())
@@ -37,9 +48,15 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
                 .param("cep", e.getCep())
                 .update();
 
-        return jdbcClient.sql("SELECT LAST_INSERT_ID()")
+        Long id = jdbcClient.sql("SELECT id FROM enderecos WHERE usuario_id = :usuarioId")
+                .param("usuarioId", usuarioId.toString())
                 .query(Long.class)
                 .single();
+
+        if (id == null) {
+            throw new IllegalStateException("Falha ao obter id do endereço recém-criado para usuario_id=" + usuarioId);
+        }
+        return id;
     }
 
     @Override
