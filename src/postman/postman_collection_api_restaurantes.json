@@ -1,13 +1,13 @@
 {
   "collection": {
     "info": {
-      "_postman_id": "5fb06058-96ec-49f5-af55-e5d60fe33ebf",
+      "_postman_id": "fb82eaba-3388-41d3-b8e7-029ddbb0b9f4",
       "name": "API - Gestão de Restaurantes",
       "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-      "createdAt": "2026-01-14T13:50:41.000Z",
-      "updatedAt": "2026-01-20T17:18:57.000Z",
+      "createdAt": "2026-01-20T17:20:24.000Z",
+      "updatedAt": "2026-01-21T02:28:54.000Z",
       "lastUpdatedBy": "36899625",
-      "uid": "36899625-5fb06058-96ec-49f5-af55-e5d60fe33ebf"
+      "uid": "36899625-fb82eaba-3388-41d3-b8e7-029ddbb0b9f4"
     },
     "item": [
       {
@@ -19,7 +19,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "id": "e6f156ea-e8de-49c7-bff1-58e666e3b1e1",
                   "exec": [
                     "pm.test(\"Status deve ser 201\", function () {\r",
                     "  pm.expect([201]).to.include(pm.response.code);\r",
@@ -47,7 +47,7 @@
                 }
               }
             ],
-            "id": "4fed7fdb-dadd-43c2-b447-1194fabd4b1e",
+            "id": "a1976e0f-3ac1-4b48-a1a6-564588d3fc0f",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -84,9 +84,9 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-14T14:04:45.000Z",
-            "updatedAt": "2026-01-20T03:30:12.000Z",
-            "uid": "36899625-4fed7fdb-dadd-43c2-b447-1194fabd4b1e"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-a1976e0f-3ac1-4b48-a1a6-564588d3fc0f"
           },
           {
             "name": "Usuário: Cadastro sem endereço ok",
@@ -94,7 +94,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "id": "72e80227-86ed-4d6a-a1a0-6ad22e7427dc",
                   "exec": [
                     "pm.test(\"Status deve ser 201\", function () {\r",
                     "  pm.expect([201]).to.include(pm.response.code);\r",
@@ -117,7 +117,7 @@
                 }
               }
             ],
-            "id": "7fa6adb0-6fed-4865-93c4-c10db77cf4c3",
+            "id": "b05bb705-6a22-4f88-862b-661d5eaed5c1",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -154,9 +154,9 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-15T18:37:10.000Z",
-            "updatedAt": "2026-01-15T21:25:04.000Z",
-            "uid": "36899625-7fa6adb0-6fed-4865-93c4-c10db77cf4c3"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-b05bb705-6a22-4f88-862b-661d5eaed5c1"
           },
           {
             "name": "Usuário: Cadastro faltando dados",
@@ -164,7 +164,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "id": "c87875c1-58c2-4cbf-bcae-066f1ff5eaf8",
                   "exec": [
                     "pm.test(\"Deve falhar com 400\", function () {\r",
                     "  pm.expect(pm.response.code).to.equal(400);\r",
@@ -181,7 +181,7 @@
                 }
               }
             ],
-            "id": "d6f29e50-2fbd-487f-b52d-ae97373ac62b",
+            "id": "3d15ab70-e229-48c2-bf68-3215cd4c716a",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -218,9 +218,9 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-15T18:38:16.000Z",
-            "updatedAt": "2026-01-20T03:51:34.000Z",
-            "uid": "36899625-d6f29e50-2fbd-487f-b52d-ae97373ac62b"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-3d15ab70-e229-48c2-bf68-3215cd4c716a"
           },
           {
             "name": "Usuário: Cadastro com login e email duplicado",
@@ -228,7 +228,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "id": "e287222d-1448-442b-a777-f09559665aaf",
                   "exec": [
                     "pm.test(\"Duplicado deve dar erro (ideal 409)\", function () {\r",
                     "  pm.expect([400, 409, 500]).to.include(pm.response.code);\r",
@@ -244,7 +244,7 @@
                 }
               }
             ],
-            "id": "6c0987e2-6317-4dc0-822d-5d393086754b",
+            "id": "2bcbd97f-5b08-4510-be5a-a10bf1417237",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -281,9 +281,9 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-15T18:40:56.000Z",
-            "updatedAt": "2026-01-19T18:05:40.000Z",
-            "uid": "36899625-6c0987e2-6317-4dc0-822d-5d393086754b"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-2bcbd97f-5b08-4510-be5a-a10bf1417237"
           },
           {
             "name": "Usuário: Alterar nome",
@@ -291,7 +291,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "id": "465193b8-0f73-4613-bb69-939606bc6e2e",
                   "exec": [
                     "pm.test(\"Status deve ser 200\", function () {\r",
                     "  pm.expect([200]).to.include(pm.response.code);\r",
@@ -314,7 +314,7 @@
                 }
               }
             ],
-            "id": "74d70b1e-c361-46b8-8281-60a57002585c",
+            "id": "a5b6b30a-5342-4bcb-8de7-98fd7fe9bb08",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -352,9 +352,9 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-15T20:47:45.000Z",
-            "updatedAt": "2026-01-20T03:47:34.000Z",
-            "uid": "36899625-74d70b1e-c361-46b8-8281-60a57002585c"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-a5b6b30a-5342-4bcb-8de7-98fd7fe9bb08"
           },
           {
             "name": "Usuário: Alterar senha",
@@ -362,7 +362,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "id": "fd95c5aa-c275-4b1e-9184-9063f7827a2b",
                   "exec": [
                     ""
                   ],
@@ -376,7 +376,7 @@
                 }
               }
             ],
-            "id": "35f004e5-e9bc-4d9c-9f2d-4897a2e365a8",
+            "id": "b7dcbe4f-21a7-43ad-b9c3-cc1162c5d7fa",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -403,21 +403,21 @@
                 }
               },
               "url": {
-                "raw": "{{baseUrl}}/usuarios/{{usuarioId}}}/senha",
+                "raw": "{{baseUrl}}/usuarios/{{usuarioId}}/senha",
                 "host": [
                   "{{baseUrl}}"
                 ],
                 "path": [
                   "usuarios",
-                  "{{usuarioId}}}",
+                  "{{usuarioId}}",
                   "senha"
                 ]
               }
             },
             "response": [],
-            "createdAt": "2026-01-20T03:44:16.000Z",
-            "updatedAt": "2026-01-20T04:51:28.000Z",
-            "uid": "36899625-35f004e5-e9bc-4d9c-9f2d-4897a2e365a8"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T21:57:48.000Z",
+            "uid": "36899625-b7dcbe4f-21a7-43ad-b9c3-cc1162c5d7fa"
           },
           {
             "name": "Usuário: Usuario não encontrado",
@@ -425,7 +425,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "9692d244-f63c-467a-80ba-8e20021bb230",
+                  "id": "3e060c47-a420-4442-aac3-2a4cc582ecb0",
                   "exec": [
                     "pm.test(\"Status deve ser 200\", function () {\r",
                     "  pm.expect([200]).to.include(pm.response.code);\r",
@@ -448,7 +448,7 @@
                 }
               }
             ],
-            "id": "40dfb1a6-7d6c-42b1-b659-dee9270b2615",
+            "id": "d11e151a-4e7d-43c8-b0d1-1d89a94fcae3",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -486,9 +486,9 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-15T21:22:23.000Z",
-            "updatedAt": "2026-01-20T16:04:48.000Z",
-            "uid": "36899625-40dfb1a6-7d6c-42b1-b659-dee9270b2615"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-d11e151a-4e7d-43c8-b0d1-1d89a94fcae3"
           },
           {
             "name": "Usuário: Listar todos ok",
@@ -496,7 +496,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "1c47a3c5-73fc-4521-b99c-4bc269b38ad1",
+                  "id": "3895d3e6-900e-4c27-a57c-75a7b256b179",
                   "exec": [
                     "pm.test(\"Status 200\", () =\u003E pm.expect(pm.response.code).to.equal(200));\r",
                     "\r",
@@ -513,7 +513,7 @@
                 }
               }
             ],
-            "id": "2d7c17aa-c2c7-4776-a820-907dfe176c93",
+            "id": "06a59e79-d68b-4ffb-83a0-7b01fd1f44ff",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -555,9 +555,9 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-14T13:51:21.000Z",
-            "updatedAt": "2026-01-15T21:23:57.000Z",
-            "uid": "36899625-2d7c17aa-c2c7-4776-a820-907dfe176c93"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-06a59e79-d68b-4ffb-83a0-7b01fd1f44ff"
           },
           {
             "name": "Usuario: Buscar por id ok",
@@ -565,7 +565,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "f0f41bc7-2b83-41e2-a74a-69ca6eff0a50",
+                  "id": "a69ab1ee-e58e-45fb-8728-e049a5434638",
                   "exec": [
                     "pm.test(\"Status 200\", () =\u003E pm.expect(pm.response.code).to.equal(200));\r",
                     "const body = pm.response.json();\r",
@@ -583,7 +583,7 @@
                 }
               }
             ],
-            "id": "baa3fba1-fb8b-4109-b2b6-550f6a37f477",
+            "id": "f0c355c7-a5ef-4ed4-ad9c-d4fa4066c176",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -621,9 +621,9 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-14T14:00:45.000Z",
-            "updatedAt": "2026-01-15T21:24:06.000Z",
-            "uid": "36899625-baa3fba1-fb8b-4109-b2b6-550f6a37f477"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-f0c355c7-a5ef-4ed4-ad9c-d4fa4066c176"
           },
           {
             "name": "Usuario: Buscar por nome ok",
@@ -631,7 +631,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "f0f41bc7-2b83-41e2-a74a-69ca6eff0a50",
+                  "id": "34881c44-8239-4e6b-9a3c-bcd456ecef42",
                   "exec": [
                     "pm.test(\"Status 200\", () =\u003E pm.expect(pm.response.code).to.equal(200));\r",
                     "const body = pm.response.json();\r",
@@ -649,7 +649,7 @@
                 }
               }
             ],
-            "id": "23e83e1c-134a-441b-9dc7-1b5f9e032c3a",
+            "id": "798167de-5208-4071-9de0-06c9902b43e5",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -704,9 +704,9 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-20T03:27:15.000Z",
-            "updatedAt": "2026-01-20T03:37:13.000Z",
-            "uid": "36899625-23e83e1c-134a-441b-9dc7-1b5f9e032c3a"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-798167de-5208-4071-9de0-06c9902b43e5"
           },
           {
             "name": "Usuário: Exclusão ok",
@@ -714,7 +714,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "f0f41bc7-2b83-41e2-a74a-69ca6eff0a50",
+                  "id": "0efd2251-b999-461e-a68a-bc7e70dc8ee1",
                   "exec": [
                     "pm.test(\"Status deve ser 204 ou 200\", function () {\r",
                     "  pm.expect([204, 200]).to.include(pm.response.code);\r",
@@ -731,7 +731,7 @@
                 }
               }
             ],
-            "id": "fec942f3-0244-40f8-b590-6f2c7d6e0a14",
+            "id": "240b3cd8-b6c9-4466-8d86-bba0b896dcd6",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -769,9 +769,9 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-15T21:05:03.000Z",
-            "updatedAt": "2026-01-15T21:24:14.000Z",
-            "uid": "36899625-fec942f3-0244-40f8-b590-6f2c7d6e0a14"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-240b3cd8-b6c9-4466-8d86-bba0b896dcd6"
           },
           {
             "name": "Usuário: Usuário não encontrado",
@@ -779,7 +779,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "f0f41bc7-2b83-41e2-a74a-69ca6eff0a50",
+                  "id": "67181fb1-5a88-431c-809c-91477085e804",
                   "exec": [
                     "pm.test(\"Status deve ser 404\", function () {\r",
                     "  pm.expect([404]).to.include(pm.response.code);\r",
@@ -796,7 +796,7 @@
                 }
               }
             ],
-            "id": "df377ac9-7f74-4204-8da8-9863cb8e818a",
+            "id": "3b19ae15-f5ca-453e-8d91-14f73f1ce5ea",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -834,15 +834,15 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-15T21:02:52.000Z",
-            "updatedAt": "2026-01-15T21:24:30.000Z",
-            "uid": "36899625-df377ac9-7f74-4204-8da8-9863cb8e818a"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-3b19ae15-f5ca-453e-8d91-14f73f1ce5ea"
           }
         ],
-        "id": "7c05facd-6aab-49c9-8c76-e8635a131fc7",
-        "createdAt": "2026-01-14T13:59:06.000Z",
-        "updatedAt": "2026-01-20T03:44:16.000Z",
-        "uid": "36899625-7c05facd-6aab-49c9-8c76-e8635a131fc7"
+        "id": "8b45e5c3-f639-4771-8b98-15778dbfea78",
+        "createdAt": "2026-01-20T17:20:25.000Z",
+        "updatedAt": "2026-01-20T17:20:25.000Z",
+        "uid": "36899625-8b45e5c3-f639-4771-8b98-15778dbfea78"
       },
       {
         "name": "Auth",
@@ -853,7 +853,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "dbf86969-1cd8-463c-95e4-6dcf051a12f4",
+                  "id": "df7e062b-f11b-4954-add1-f0a096d23fa8",
                   "exec": [
                     "pm.test(\"Login retornou 200\", function () {\r",
                     "  pm.response.to.have.status(200);\r",
@@ -884,7 +884,7 @@
                 }
               }
             ],
-            "id": "a8a3557c-4c56-4fc8-9d63-b83d904f4c0e",
+            "id": "edfb2232-c070-484c-8a03-90b15463ac31",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -915,9 +915,9 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-15T15:44:04.000Z",
-            "updatedAt": "2026-01-20T16:07:53.000Z",
-            "uid": "36899625-a8a3557c-4c56-4fc8-9d63-b83d904f4c0e"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-edfb2232-c070-484c-8a03-90b15463ac31"
           },
           {
             "name": "Auth/Login: Acesso com senha errada",
@@ -925,7 +925,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "dbf86969-1cd8-463c-95e4-6dcf051a12f4",
+                  "id": "e847ab1f-b496-4c6e-bd45-3d95a093a4d0",
                   "exec": [
                     "pm.test(\"Login retornou 200\", function () {\r",
                     "  pm.response.to.have.status(200);\r",
@@ -956,7 +956,7 @@
                 }
               }
             ],
-            "id": "3e00b7cd-fdfe-4851-b58b-848ccf26a593",
+            "id": "7d5d549a-674e-4f4b-8335-360580acba2c",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -987,9 +987,9 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-15T21:18:52.000Z",
-            "updatedAt": "2026-01-15T21:21:31.000Z",
-            "uid": "36899625-3e00b7cd-fdfe-4851-b58b-848ccf26a593"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-7d5d549a-674e-4f4b-8335-360580acba2c"
           },
           {
             "name": "Auth/Login: Acesso com login errado",
@@ -997,7 +997,7 @@
               {
                 "listen": "test",
                 "script": {
-                  "id": "dbf86969-1cd8-463c-95e4-6dcf051a12f4",
+                  "id": "e7421cf4-ddca-44c6-8831-4bc3d12f91ab",
                   "exec": [
                     "pm.test(\"Login retornou 200\", function () {\r",
                     "  pm.response.to.have.status(200);\r",
@@ -1028,7 +1028,7 @@
                 }
               }
             ],
-            "id": "e0494afd-c78e-4a68-8b89-26017b771cf2",
+            "id": "e0886032-6534-43b2-b3eb-33f1d5facab4",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -1059,22 +1059,22 @@
               }
             },
             "response": [],
-            "createdAt": "2026-01-15T21:18:58.000Z",
-            "updatedAt": "2026-01-15T21:21:26.000Z",
-            "uid": "36899625-e0494afd-c78e-4a68-8b89-26017b771cf2"
+            "createdAt": "2026-01-20T17:20:25.000Z",
+            "updatedAt": "2026-01-20T17:20:25.000Z",
+            "uid": "36899625-e0886032-6534-43b2-b3eb-33f1d5facab4"
           }
         ],
-        "id": "9c6d43e2-1aeb-4848-83e0-25958e2a13f0",
-        "createdAt": "2026-01-15T15:43:35.000Z",
-        "updatedAt": "2026-01-15T21:18:58.000Z",
-        "uid": "36899625-9c6d43e2-1aeb-4848-83e0-25958e2a13f0"
+        "id": "3bb809a0-f83f-48b9-80cb-01e602150fce",
+        "createdAt": "2026-01-20T17:20:25.000Z",
+        "updatedAt": "2026-01-20T17:20:25.000Z",
+        "uid": "36899625-3bb809a0-f83f-48b9-80cb-01e602150fce"
       }
     ],
     "event": [
       {
         "listen": "prerequest",
         "script": {
-          "id": "96bb9a48-afc7-4e89-8a2a-6de201662f8b",
+          "id": "6d901943-e148-4309-a3ff-9d20c7f1abb8",
           "type": "text/javascript",
           "packages": {
 
@@ -1090,7 +1090,7 @@
       {
         "listen": "test",
         "script": {
-          "id": "00befc7a-35a2-4cc1-8bd0-3f7d9e3af766",
+          "id": "69af2fa6-1149-41b4-93a4-773d22e82c99",
           "type": "text/javascript",
           "packages": {
 
