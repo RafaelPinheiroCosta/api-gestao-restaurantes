@@ -207,10 +207,17 @@ Os endpoints podem ser testados utilizando:
 - Postman
 - Insomnia
 
-O repositório disponibiliza uma coleção Postman em formato JSON, contendo testes para todos os principais cenários da API:
+O repositório disponibiliza uma coleção Postman em formato JSON, contendo requisições previamente configuradas 
+para os principais cenários da API, incluindo autenticação, cadastro, consulta, atualização e remoção de usuários.
 
 A coleção pode ser encontrada em:
  [src/postman/postman_collection_api_restaurantes.json](src/postman/postman_collection_api_restaurantes.json)
+
+Antes de executar os endpoints protegidos, é necessário realizar uma autenticação inicial para obtenção do token JWT, utilizando a requisição de login disponível na coleção.
+
+Após o login, a própria coleção utiliza scripts para armazenar automaticamente o token e outros dados relevantes em variáveis de ambiente do Postman, que são reutilizadas nas requisições seguintes, garantindo a continuidade do fluxo de testes sem necessidade de configuração manual.
+
+A sequência de testes recomendada segue a ordem CRUD (Create, Read, Update, Delete), conforme organizada na coleção, assegurando que os dados necessários estejam disponíveis em cada etapa.
 
 A API segue o padrão REST e utiliza JSON como formato de comunicação.
 
@@ -219,7 +226,8 @@ A API segue o padrão REST e utiliza JSON como formato de comunicação.
 ## Evolução do Projeto
 Com a conclusão da Fase 1, o projeto estabelece uma base arquitetural sólida, pronta para evolução.
 
-As próximas fases incluirão a expansão do domínio de gestão de restaurantes, com novas entidades, regras de negócio mais complexas e refinamento técnico contínuo.
+As próximas fases incluirão a expansão do domínio de gestão de restaurantes, com novas entidades, 
+regras de negócio mais complexas e refinamento técnico contínuo.
 
 ---
 
