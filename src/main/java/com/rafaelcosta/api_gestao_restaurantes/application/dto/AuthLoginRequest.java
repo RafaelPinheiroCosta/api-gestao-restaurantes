@@ -22,7 +22,7 @@ public record AuthLoginRequest(
 
         @Schema(
                 description = "Senha do usuário.",
-                example = "Senha@1234",
+                example = "Senha@123",
                 minLength = 8,
                 maxLength = 72
         )
